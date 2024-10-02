@@ -35,7 +35,7 @@ const moods = {
         })}
       </div>
       <h4 className={`text-3xl sm:text-4xl md:text-5xl text-center ${fugaz.className}`}>How are you <span className='textGradient'>feeling</span> today?</h4>
-      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-6 gap-4'>
+      <div className='grid grid-cols-2 md:grid-cols-6 gap-4'>
         {Object.keys(moods).map((mood, moodIndex) => {
           return (
             <button className='p-2 rounded-lg duration-200 bg-indigo-50 hover:bg-indigo-100 purpleShadow' key={moodIndex}>

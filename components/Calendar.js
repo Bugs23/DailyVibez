@@ -39,9 +39,9 @@ const data = {
 
 export default function Calendar({demo}) {
 
-  const year = 2024
+  const year = 2025
 
-  const month = "October"
+  const month = "January"
 
   // Set the year as the year in the year variable above (i.e. 2024)
   // Create an array of the keys from the months object above (i.e. January, February, March, etc...)
