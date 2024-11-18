@@ -1,5 +1,6 @@
+"use client"
 import { baseRating, gradients } from "@/utils"
-import React from "react"
+import React, {useState} from "react"
 
 // Months of the year
 const months = {
@@ -31,33 +32,39 @@ const dayList = [
   "Saturday"
 ]
 
-// Demo data
-const data = {
-  "15": 2, "16": 4, "17": 1, "18": 3, "19": 5,
-  "20": 2, "21": 4, "22": 1, "23": 3, "24": 5,
-}
+export default function Calendar({demo, data, handleSetMood}) {
 
-export default function Calendar({demo}) {
+  const now = new Date()
+  const currentMonth = now.getMonth()
+  const [selectedMonth, setSelectedMonth] = useState(Object.keys(months)[currentMonth])
+  const [selectedYear, setSelectedYear] = useState(now.getFullYear())
 
-  const year = 2025
+  function handleIncrementMonth(val) {
+    // Value +1 -1
+    // If we hit the bounds of the months, we can just adjust the year that is displayed instead
+  }
 
-  const month = "January"
 
-  // Set the year as the year in the year variable above (i.e. 2024)
+
+  // const selectedYear = 2024
+
+  // const month = "January"
+
+  // Set the selectedYear as the selectedYear in the selectedYear variable above (i.e. 2024)
   // Create an array of the keys from the months object above (i.e. January, February, March, etc...)
-  // Get the index of the month that"s in the month variable above (i.e. September)
+  // Get the index of the month that"s in the selectedMonth variable above (i.e. September)
   // Set the day of the month as the first day of the month (i.e. 1)
-  const monthNow = new Date(year, Object.keys(months).indexOf(month), 1) // September 1, 2024
+  const monthNow = new Date(selectedYear, Object.keys(months).indexOf(selectedMonth), 1) // September 1, 2024
 
   // Get the day of the week for the date returned in the monthNow variable
   const firstDayOfMonth = monthNow.getDay() // Returns 0 for Sunday
 
   /* Get the number of days in the month */
-  // Set the year as the year in the year variable above (i.e. 2024)
+  // Set the selectedYear as the selectedYear in the selectedYear variable above (i.e. 2024)
   // Create an array of the keys from the months object above (i.e. January, February, March, etc...)
-  // Get the index of the month that"s in the month variable above and add 1 to jump to the next month (i.e. October)
-  // Pass 0 as the day to get the last day of the month in the month variable - because 0 day of October would be the last day of septembr (i.e. 30)
-  const daysInMonth = new Date(year, Object.keys(months).indexOf(month) + 1, 0).getDate()
+  // Get the index of the month that"s in the selectedMonth variable above and add 1 to jump to the next month (i.e. October)
+  // Pass 0 as the day to get the last day of the month in the selectedMonth variable - because 0 day of October would be the last day of septembr (i.e. 30)
+  const daysInMonth = new Date(selectedYear, Object.keys(months).indexOf(selectedMonth) + 1, 0).getDate()
 
   const daysToDisplay = firstDayOfMonth + daysInMonth // 0 + 30 = 30 days to display
 

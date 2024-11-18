@@ -1,26 +1,87 @@
+"use client"
 import { Fugaz_One } from 'next/font/google';
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Calendar from './Calendar';
+import { useAuth } from '@/context/AuthContext';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '@/firebase';
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
 export default function Dashboard() {
 
-const statuses = {
-  num_days: 14,
-  time_remaining: "13:14:26",
-  date: (new Date()).toDateString()
-}
+  const {currentUser, userDataObj, setUserDataObj} = useAuth()
+  const [data, setData] = useState({})
 
-const moods = {
-  "happy": "😀",
-  "sad": "😢",
-  "fear": "😧",
-  "disgust": "🤮",
-  "angry": "😡",
-  "surprised": "😮"
+  // Count values in data array
+  function countValues() {
 
-}
+  }
+
+  async function handleSetMood(mood, day, month, year) {
+    try {
+    // Create copy of current users data
+    const newData = {...userDataObj}
+
+    /* 
+      - Check if newData exists and contains a property for the specified year
+        - If newData doesn't, create a new newData[year] object
+    */
+    if (!newData?.[year]) {
+      newData[year] = {}
+    }
+
+    /* 
+      - Check if newData has an object for the specified year and month
+        - If it doesn't, create a newData[year][month] object
+    */
+    if (!newData?.[year]?.[month]) {
+      newData[year][month] = {}
+    }
+
+    newData[year][month][day] = mood
+    // Update the current state
+    setData(newData)
+    // Update the global state
+    setUserDataObj(newData)
+    // Update firebase
+    const docRef = doc(db, "users", currentUser.uid)
+    const res = await setDoc(docRef, {
+      [year]: {
+        [month]: {
+          [day]: mood
+        }
+      }
+    }, {merge: true})
+    } catch(err) {
+      console.log("Failed to set data: ", err.message)
+    }
+  }
+
+  const statuses = {
+    num_days: 14,
+    time_remaining: "13:14:26",
+    date: (new Date()).toDateString()
+  }
+
+  const moods = {
+    "happy": "😀",
+    "sad": "😢",
+    "fear": "😧",
+    "disgust": "🤮",
+    "angry": "😡",
+    "surprised": "😮"
+
+  }
+
+  useEffect(() => {
+    if (!currentUser || !userDataObj) {
+      return
+    }
+
+    setData(userDataObj)
+
+  }, [currentUser, userDataObj])
 
   return (
     <div className='flex flex-col flex-1 gap-8 sm:gap-10 md:gap-12'>
@@ -45,7 +106,7 @@ const moods = {
           )
         })}
       </div>
-      <Calendar />
+      <Calendar data={data} handleSetMood={handleSetMood} />
     </div>
   )
 }
