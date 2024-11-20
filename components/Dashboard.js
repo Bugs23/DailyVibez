@@ -5,12 +5,14 @@ import Calendar from './Calendar';
 import { useAuth } from '@/context/AuthContext';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/firebase';
+import Login from './Login';
+import Loading from './Loading';
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
 export default function Dashboard() {
 
-  const {currentUser, userDataObj, setUserDataObj} = useAuth()
+  const {currentUser, userDataObj, setUserDataObj, loading} = useAuth()
   const [data, setData] = useState({})
 
   // Count values in data array
@@ -18,41 +20,47 @@ export default function Dashboard() {
 
   }
 
-  async function handleSetMood(mood, day, month, year) {
+  async function handleSetMood(mood) {
+
+    const now = new Date()
+    const day = now.getDate()
+    const month = now.getMonth()
+    const year = now.getFullYear()
+
     try {
-    // Create copy of current users data
-    const newData = {...userDataObj}
+      // Create copy of current users data
+      const newData = {...userDataObj}
 
-    /* 
-      - Check if newData exists and contains a property for the specified year
-        - If newData doesn't, create a new newData[year] object
-    */
-    if (!newData?.[year]) {
-      newData[year] = {}
-    }
-
-    /* 
-      - Check if newData has an object for the specified year and month
-        - If it doesn't, create a newData[year][month] object
-    */
-    if (!newData?.[year]?.[month]) {
-      newData[year][month] = {}
-    }
-
-    newData[year][month][day] = mood
-    // Update the current state
-    setData(newData)
-    // Update the global state
-    setUserDataObj(newData)
-    // Update firebase
-    const docRef = doc(db, "users", currentUser.uid)
-    const res = await setDoc(docRef, {
-      [year]: {
-        [month]: {
-          [day]: mood
-        }
+      /* 
+        - Check if newData exists and contains a property for the specified year
+          - If newData doesn't, create a new newData[year] object
+      */
+      if (!newData?.[year]) {
+        newData[year] = {}
       }
-    }, {merge: true})
+
+      /* 
+        - Check if newData has an object for the specified year and month
+          - If it doesn't, create a newData[year][month] object
+      */
+      if (!newData?.[year]?.[month]) {
+        newData[year][month] = {}
+      }
+
+      newData[year][month][day] = mood
+      // Update the current state
+      setData(newData)
+      // Update the global state
+      setUserDataObj(newData)
+      // Update firebase
+      const docRef = doc(db, "users", currentUser.uid)
+      const res = await setDoc(docRef, {
+        [year]: {
+          [month]: {
+            [day]: mood
+          }
+        }
+      }, {merge: true})
     } catch(err) {
       console.log("Failed to set data: ", err.message)
     }
@@ -83,6 +91,14 @@ export default function Dashboard() {
 
   }, [currentUser, userDataObj])
 
+  if (loading) {
+    return <Loading />
+  }
+
+  if (!currentUser) {
+    return <Login />
+  }
+
   return (
     <div className='flex flex-col flex-1 gap-8 sm:gap-10 md:gap-12'>
       <div className='p-4 gap-2 grid grid-cols-3 bg-indigo-50 text-indigo-500 rounded-lg'>
@@ -99,7 +115,14 @@ export default function Dashboard() {
       <div className='grid grid-cols-2 md:grid-cols-6 gap-4'>
         {Object.keys(moods).map((mood, moodIndex) => {
           return (
-            <button className='p-2 rounded-lg duration-200 bg-indigo-50 hover:bg-indigo-100 purpleShadow' key={moodIndex}>
+            <button 
+              onClick={() => {
+                const currentMoodValue = moodIndex + 1
+                handleSetMood(currentMoodValue)
+              }} 
+              className='p-2 rounded-lg duration-200 bg-indigo-50 hover:bg-indigo-100 purpleShadow' 
+              key={moodIndex}
+            >
               <span className='text-4xl block'>{moods[mood]}</span>
               <span className={`capitalize text-base text-indigo-500 ${fugaz.className}`}>{mood}</span>
             </button>
