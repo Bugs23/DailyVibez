@@ -2,6 +2,7 @@ import { Fugaz_One, Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { AuthProvider } from "@/context/AuthContext";
+import Head from "./head";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const fugaz = Fugaz_One({ variable: "--font-fugaz-one", subsets: ["latin"], weight: ["400"] });
@@ -32,6 +33,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <Head />
       <AuthProvider>
         <body className={`w-full max-w-[1000px] mx-auto text-sm sm:text-base min-h-screen flex flex-col text-slate-800 ${inter.className}`}>
           {Header}

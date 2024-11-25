@@ -14,15 +14,10 @@ export default function Dashboard() {
 
   const {currentUser, userDataObj, setUserDataObj, loading} = useAuth()
   const [data, setData] = useState({})
-
-  // Count values in data array
-  function countValues() {
-
-  }
+  const now = new Date()
 
   async function handleSetMood(mood) {
 
-    const now = new Date()
     const day = now.getDate()
     const month = now.getMonth()
     const year = now.getFullYear()
@@ -129,7 +124,7 @@ export default function Dashboard() {
           )
         })}
       </div>
-      <Calendar data={data} handleSetMood={handleSetMood} />
+      <Calendar completeData={data} handleSetMood={handleSetMood} />
     </div>
   )
 }

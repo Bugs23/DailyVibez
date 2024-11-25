@@ -32,12 +32,19 @@ const dayList = [
   "Saturday"
 ]
 
-export default function Calendar({demo, data, handleSetMood}) {
+export default function Calendar({demo, completeData, handleSetMood}) {
 
   const now = new Date()
   const currentMonth = now.getMonth()
   const [selectedMonth, setSelectedMonth] = useState(Object.keys(months)[currentMonth])
   const [selectedYear, setSelectedYear] = useState(now.getFullYear())
+
+  // Get index of the month
+  const numericMonth = Object.keys(months).indexOf(selectedMonth)
+
+  // Access data for the selected year and month from completeData, or set data to undefined if completeData, the year, or the month is missing
+  const data = completeData?.[selectedYear]?.[numericMonth] || {}
+  console.log(completeData?.[selectedYear]?.[selectedMonth])
 
   function handleIncrementMonth(val) {
     // Value +1 -1
@@ -89,12 +96,12 @@ export default function Calendar({demo, data, handleSetMood}) {
                 )
               }
 
-              let color = demo ? 
-                gradients.indigo[baseRating[dayIndex]] : 
-                dayIndex in data 
-                ? gradients.indigo[data[dayIndex]] : 
-                "white"
-
+              let color = demo ?
+                gradients.indigo[baseRating[dayIndex]] :
+                dayIndex in data ?
+                  gradients.indigo[data[dayIndex]] :
+                  'white'
+                
               return (
                 <div 
                   key={dayOfWeekIndex} 
