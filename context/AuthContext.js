@@ -71,7 +71,7 @@ export function AuthProvider({children}) {
                     // *** Remove before production **
                     console.log(firebaseData)
                 }
-
+                setUserDataObj(firebaseData)
             } catch(err) {
                 console.log(err.message)
             } finally {
