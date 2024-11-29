@@ -18,6 +18,8 @@ const months = {
   "December": "Dec"
 }
 
+const monthsArr = Object.keys(months)
+
 // Current date
 const now = new Date()
 
@@ -40,7 +42,7 @@ export default function Calendar({demo, completeData, handleSetMood}) {
   const [selectedYear, setSelectedYear] = useState(now.getFullYear())
 
   // Get index of the month
-  const numericMonth = Object.keys(months).indexOf(selectedMonth)
+  const numericMonth = monthsArr.indexOf(selectedMonth)
 
   // Access data for the selected year and month from completeData, or set data to undefined if completeData, the year, or the month is missing
   const data = completeData?.[selectedYear]?.[numericMonth] || {}
@@ -49,6 +51,17 @@ export default function Calendar({demo, completeData, handleSetMood}) {
   function handleIncrementMonth(val) {
     // Value +1 -1
     // If we hit the bounds of the months, we can just adjust the year that is displayed instead
+    if (numericMonth + val < 0) { 
+      // Set month value = to 11 and decrement the year
+      setSelectedYear(curr => curr - 1)
+      setSelectedMonth[monthsArr[monthsArr.length - 1]]
+    } else if (numericMonth + val > 11) {
+      // Set month value = to 0 and increment the year
+      setSelectedYear(curr => curr + 1)
+      setSelectedMonth[monthsArr[0]]
+    } else {
+      setSelectedMonth(monthsArr[numericMonth + val])
+    }
   }
 
 
