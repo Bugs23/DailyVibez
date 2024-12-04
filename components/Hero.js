@@ -3,6 +3,7 @@ import React from "react"
 import Button from "./Button";
 import Calendar from "./Calendar";
 import Link from "next/link";
+import CallToAction from "./CallToAction";
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
 
@@ -13,14 +14,7 @@ export default function Hero() {
                 With <span className="textGradient">Daily Vibez</span> you can discover <span className="textGradient">patterns</span> and gain <span className="textGradient">insights</span> into your emotional well-being.
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl mt-2 mx-auto max-w-[800px]">Keep track of your moods effortlessly, every day.</p>
-            <div className="grid grid-cols-2 gap-4 w-fit mx-auto mt-8">
-                <Link href={"/dashboard"}>
-                    <Button text="Sign Up" />
-                </Link>
-                <Link href={"/dashboard"}>
-                    <Button text="Login" dark />
-                </Link>
-            </div>
+            <CallToAction />
             <Calendar demo />
         </div>
     )
