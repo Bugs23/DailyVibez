@@ -1,12 +1,12 @@
-import { Fugaz_One, Inter } from "next/font/google";
+import { Anton_SC, Inter } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { AuthProvider } from "@/context/AuthContext";
 import Head from "./head";
 import Logout from "@/components/Logout";
 
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
-const fugaz = Fugaz_One({ variable: "--font-fugaz-one", subsets: ["latin"], weight: ["400"] });
+const inter = Inter({ subsets: ["latin"] });
+const anton = Anton_SC({ subsets: ["latin"], weight: ["400"] });
 
 export const metadata = {
   title: "DailyVibez",
@@ -16,9 +16,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
 
   const Header = (
-    <header className="p-4 sm:p-8 flex items-center justify-between gap-4">
+    <header className="pt-6 pb-8 px-4 flex items-center justify-between gap-4">
       <Link href={"/"}>
-        <h1 className={`text-base sm:text-lg textGradient ${fugaz.className}`}>Daily Vibez</h1>
+        <h1 className={`text-xl sm:text-2xl textGradient ${anton.className}`}>Daily Vibez</h1>
       </Link>
       <Logout />
     </header>
@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
 
   const Footer = (
     <footer className="p-4 sm:p-8 grid place-items-center">
-      <p>&copy;{new Date().getFullYear()} <span className={`text-indigo-500 ${fugaz.className}`}>Built with</span> ❤️</p>
+      <p>&copy;{new Date().getFullYear()} <span className={`textGradient ${anton.className}`}>Raymond Urrutia</span></p>
     </footer>
   )
 

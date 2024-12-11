@@ -3,7 +3,6 @@ import React from 'react'
 import Button from './Button'
 import { useAuth } from '@/context/AuthContext'
 import { usePathname } from 'next/navigation'
-import { PathnameContext } from 'next/dist/shared/lib/hooks-client-context.shared-runtime'
 import Link from 'next/link'
 
 export default function Logout() {

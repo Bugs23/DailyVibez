@@ -1,14 +1,14 @@
 "use client"
-import { Fugaz_One } from 'next/font/google';
+import { Anton_SC } from 'next/font/google';
 import React, {useEffect, useState} from 'react'
 import Calendar from './Calendar';
 import { useAuth } from '@/context/AuthContext';
-import { count, doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/firebase';
 import Login from './Login';
 import Loading from './Loading';
 
-const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
+const anton = Anton_SC({ subsets: ["latin"], weight: ["400"] });
 
 export default function Dashboard() {
 
@@ -29,7 +29,7 @@ export default function Dashboard() {
         }
       }
     }
-    return { num_days: total_number_of_days, average_mood: (sum_moods / total_number_of_days).toFixed(1) }
+    return { Number_Of_Days: total_number_of_days, average_mood: (sum_moods / total_number_of_days).toFixed(1) }
   }
 
   const statuses = {
@@ -83,13 +83,21 @@ export default function Dashboard() {
   }
 
   const moods = {
+    "disgust": "🤮",
+    "angry": "😡",
+    "fear": "😧",
+    "sad": "😢",
+    "content": "🙂",
+    "happy": "☺️"
+
+    /*
     "happy": "😀",
     "sad": "😢",
     "fear": "😧",
     "disgust": "🤮",
     "angry": "😡",
     "surprised": "😮"
-
+    */
   }
 
   useEffect(() => {
@@ -111,17 +119,17 @@ export default function Dashboard() {
 
   return (
     <div className='flex flex-col flex-1 gap-8 sm:gap-10 md:gap-12'>
-      <div className='p-4 gap-2 grid grid-cols-3 bg-indigo-50 text-indigo-500 rounded-lg'>
+      <div className='p-4 gap-2 grid grid-cols-3 bg-blue-50 text-blue-500 rounded-xl'>
         {Object.keys(statuses).map((status, statusIndex) => {
           return (
             <div key={statusIndex} className='flex flex-col gap-1 sm:gap-2'>
               <p className='font-medium capitalize text-xs sm:text-sm truncate'>{status.replaceAll("_", " ")}</p>
-              <p className={`text-base sm:text-lg truncate ${fugaz.className}`}>{statuses[status]}</p>
+              <p className={`text-base sm:text-lg truncate ${anton.className}`}>{statuses[status]}</p>
             </div>
           )
         })}
       </div>
-      <h4 className={`text-3xl sm:text-4xl md:text-5xl text-center ${fugaz.className}`}>How are you <span className='textGradient'>feeling</span> today?</h4>
+      <h4 className={`text-3xl sm:text-4xl md:text-5xl text-center ${anton.className}`}>How are you <span className='textGradient'>feeling</span> today?</h4>
       <div className='grid grid-cols-2 md:grid-cols-6 gap-4'>
         {Object.keys(moods).map((mood, moodIndex) => {
           return (
@@ -130,16 +138,17 @@ export default function Dashboard() {
                 const currentMoodValue = moodIndex + 1
                 handleSetMood(currentMoodValue)
               }} 
-              className='p-2 rounded-lg duration-200 bg-indigo-50 hover:bg-indigo-100 purpleShadow' 
+              className={`flex justify-center order-${moodIndex + 1} gap-2 items-center p-2 rounded-lg duration-200 bg-blue-50 hover:bg-blue-100 blueShadow`}
               key={moodIndex}
             >
-              <span className='text-4xl block'>{moods[mood]}</span>
-              <span className={`capitalize text-base text-indigo-500 ${fugaz.className}`}>{mood}</span>
+              <span className='text-4xl'>{moods[mood]}</span>
+              <span className={`capitalize text-base text-blue-500 ${anton.className}`}>{mood}</span>
             </button>
           )
         })}
       </div>
       <Calendar completeData={data} handleSetMood={handleSetMood} />
+      <div></div>
     </div>
   )
 }

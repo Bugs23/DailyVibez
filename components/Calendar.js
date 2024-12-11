@@ -1,9 +1,9 @@
 "use client"
 import { baseRating, gradients } from "@/utils"
-import { Fugaz_One } from "next/font/google"
+import { Anton_SC } from "next/font/google"
 import React, {useState} from "react"
 
-const fugaz = Fugaz_One({ subsets: ["latin"], weight: ["400"] });
+const anton = Anton_SC({ subsets: ["latin"], weight: ["400"] });
 
 // Months of the year
 const months = {
@@ -97,11 +97,11 @@ export default function Calendar({demo, completeData, handleSetMood}) {
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-3 gap-4">
         <button onClick={() => handleIncrementMonth(-1)} className="mr-auto">
-          <i className="fa-solid fa-circle-chevron-left text-indigo-500 text-4xl sm:text-2xl duration-200 hover:opacity-80"></i>
+          <i className="fa-solid fa-circle-chevron-left text-blue-500 text-4xl sm:text-2xl duration-200 hover:opacity-80"></i>
         </button>
-        <p className={`text-center text-2xl capitalize textGradient ${fugaz.className}`}>{selectedMonth} {selectedYear}</p>
+        <p className={`text-center text-2xl capitalize textGradient ${anton.className}`}>{selectedMonth} {selectedYear}</p>
         <button onClick={() => handleIncrementMonth(+1)} className="ml-auto">
-          <i className="fa-solid fa-circle-chevron-right text-indigo-500 text-4xl sm:text-2xl duration-200 hover:opacity-80"></i>
+          <i className="fa-solid fa-circle-chevron-right text-blue-500 text-4xl sm:text-2xl duration-200 hover:opacity-80"></i>
         </button>
       </div>
       <div className="flex flex-col overflow-hidden gap-1 py-4 sm:py-6 md:py-10">
@@ -123,16 +123,16 @@ export default function Calendar({demo, completeData, handleSetMood}) {
                 }
 
                 let color = demo ?
-                  gradients.indigo[baseRating[dayIndex]] :
+                  gradients.blue[baseRating[dayIndex]] :
                   dayIndex in data ?
-                    gradients.indigo[data[dayIndex]] :
+                    gradients.blue[data[dayIndex]] :
                     'white'
                   
                 return (
                   <div 
                     key={dayOfWeekIndex} 
                     style={{background: color}} 
-                    className={`text-xs sm:text-sm border border-solid p-2 flex items-center gap-2 justify-between rounded-lg ${isToday ? "border-indigo-400" : "border-indigo-100"} ${color === "white" ? "text-indigo-400" : "text-white"}`}
+                    className={`text-xs sm:text-sm border border-solid p-2 flex items-center gap-2 justify-between rounded-lg ${isToday ? "border-blue-500" : "border-blue-200"} ${color === "white" ? "text-blue-400" : "text-white"}`}
                   >
                     <p>{dayIndex}</p>
                   </div>
