@@ -1,6 +1,6 @@
 "use client"
 import { Anton_SC } from 'next/font/google';
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import Calendar from './Calendar';
 import { useAuth } from '@/context/AuthContext';
 import { doc, setDoc } from 'firebase/firestore';
@@ -12,7 +12,7 @@ const anton = Anton_SC({ subsets: ["latin"], weight: ["400"] });
 
 export default function Dashboard() {
 
-  const {currentUser, userDataObj, setUserDataObj, loading} = useAuth()
+  const { currentUser, userDataObj, setUserDataObj, loading } = useAuth()
   const [data, setData] = useState({})
   const now = new Date()
 
@@ -45,7 +45,7 @@ export default function Dashboard() {
 
     try {
       // Create copy of current users data
-      const newData = {...userDataObj}
+      const newData = { ...userDataObj }
 
       /* 
         - Check if newData exists and contains a property for the specified year
@@ -76,8 +76,8 @@ export default function Dashboard() {
             [day]: mood
           }
         }
-      }, {merge: true})
-    } catch(err) {
+      }, { merge: true })
+    } catch (err) {
       console.log("Failed to set data: ", err.message)
     }
   }
@@ -133,11 +133,11 @@ export default function Dashboard() {
       <div className='grid grid-cols-2 md:grid-cols-6 gap-4'>
         {Object.keys(moods).map((mood, moodIndex) => {
           return (
-            <button 
+            <button
               onClick={() => {
                 const currentMoodValue = moodIndex + 1
                 handleSetMood(currentMoodValue)
-              }} 
+              }}
               className={`flex justify-center order-${moodIndex + 1} gap-2 items-center p-2 rounded-lg duration-200 bg-blue-50 hover:bg-blue-100 blueShadow`}
               key={moodIndex}
             >

@@ -41,12 +41,12 @@ export default function Login() {
         <div className="flex flex-col flex-1 justify-center items-center gap-4">
             <h3 className={`text-4xl sm:text-5xl md:text-6xl ${anton.className}`}>{isRegistered ? "Login" : "Sign Up"}</h3>
             <p>You're so close!</p>
-            <input value={email} onChange={(e) => setEmail(e.target.value)} className="w-full max-w-[400px] mx-auto px-3 py-2 sm:py-3 border border-solid border-indigo-400 duration-200 hover:border-indigo-700 focus:border-indigo-700 rounded-full outline-none" placeholder="Email" />
-            <input value={password} onChange={(e) => setPassword(e.target.value)} className="w-full max-w-[400px] mx-auto px-3 py-2 sm:py-3 border border-solid border-indigo-400 duration-200 hover:border-indigo-700 focus:border-indigo-700 rounded-full outline-none" placeholder="Password" type="password" />
+            <input value={email} onChange={(e) => setEmail(e.target.value)} className="w-full max-w-[400px] mx-auto px-3 py-2 sm:py-3 border border-solid border-blue-400 duration-200 hover:border-blue-600 focus:border-blue-600 rounded-full outline-none" placeholder="Email" />
+            <input value={password} onChange={(e) => setPassword(e.target.value)} className="w-full max-w-[400px] mx-auto px-3 py-2 sm:py-3 border border-solid border-blue-400 duration-200 hover:border-blue-600 focus:border-blue-600 rounded-full outline-none" placeholder="Password" type="password" />
             <div className="max-w-[400px] w-full mx-auto">
-                <Button clickHandler={handleSubmit} text={authenticating ? "submitting" : "Submit"} full />
+                <Button dark clickHandler={handleSubmit} text={authenticating ? "submitting" : "Submit"} full />
             </div>
-            <button onClick={() => setIsRegistered(!isRegistered)}>Don't have an account? <span className="text-indigo-600">{isRegistered ? "Login" : "Sign up"}</span></button>
+            <button onClick={() => setIsRegistered(!isRegistered)}>Don't have an account? <span className="text-blue-600">{isRegistered ? "Login" : "Sign up"}</span></button>
         </div>
     )
 }
